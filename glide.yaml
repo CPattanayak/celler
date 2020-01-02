@@ -1,0 +1,8 @@
+package: celler
+import:
+- package: github.com/alecthomas/template
+- package: github.com/gin-gonic/gin
+- package: github.com/satori/go.uuid
+- package: github.com/swaggo/files
+- package: github.com/swaggo/gin-swagger
+- package: github.com/swaggo/swag
