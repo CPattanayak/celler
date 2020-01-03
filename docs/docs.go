@@ -30,7 +30,7 @@ var doc = `{
         },
         "version": "1.0"
     },
-    "host": "localhost:30010",
+    
     "basePath": "/api/v1",
     "paths": {
         "/accounts": {
