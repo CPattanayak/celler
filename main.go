@@ -93,7 +93,7 @@ func main() {
 		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	r.Run(":8082")
+	r.Run("0.0.0.0:8082")
 }
 
 func auth() gin.HandlerFunc {

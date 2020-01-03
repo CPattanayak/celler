@@ -90,6 +90,22 @@ spec:
         }
       }
     }
+	 stage('Deploy') {
+            steps {
+                
+                    container('kubectl') {
+                       
+                     
+                        sh "sed 's/<imageid>/$BUILD_NUMBER/g' deployment.yaml > deploy.yaml"
+                        sh "cat deploy.yaml"
+                        sh "kubectl apply -f deploy.yaml"
+                        sh "kubectl get pods"
+						
+                       
+                    }
+                }
+            }
+        
 
     }
 }
