@@ -24,6 +24,11 @@ spec:
     command:
     - cat
     tty: true
+  - name: python
+    image: python:3
+    command:
+    - cat
+    tty: true
   - name: docker
     image: docker:latest
     command:
@@ -105,7 +110,18 @@ spec:
                     }
                 }
             }
-        
+     	 stage('Integration Test') {
+            steps {
+                
+                    container('python') {
+                       
+                     
+                    sh 'pip install allure-behave'
+						
+                       
+                    }
+                }
+            }   
 
     }
 }

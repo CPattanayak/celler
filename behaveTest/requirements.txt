@@ -1,0 +1,7 @@
+requests
+allure-behave
+pymongo
+urllib3
+jsonschema
+Naked
+pika
