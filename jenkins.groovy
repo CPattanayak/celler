@@ -25,7 +25,7 @@ spec:
     - cat
     tty: true
   - name: python
-    image: python:3
+    image: cpattanayak/python:v2
     command:
     - cat
     tty: true
@@ -95,7 +95,7 @@ spec:
         }
       }
     }
-	 stage('Deploy') {
+	 stage('Blue Deploy') {
             steps {
                 
                     container('kubectl') {
@@ -115,14 +115,26 @@ spec:
                 
                     container('python') {
                        
-                     
-                    sh 'pip install allure-behave'
-						
+                  
+                    sh 'behave -f allure_behave.formatter:AllureFormatter -o allure-results behaveTest/features/feature/*.feature'
+                    sh 'allure generate allure-results -o allure-report'
+                    sh 'tar -zcvf allure-report.tar.gz -C allure-report .'
+				    
+				  
                        
                     }
                 }
-            }   
+            }
+          
 
     }
+	post {
+        always {
+            archiveArtifacts artifacts: 'allure-report.tar.gz', fingerprint: true
+            
+        }
+    }
+     
+      
 }
 
