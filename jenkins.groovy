@@ -95,7 +95,7 @@ spec:
         }
       }
     }
-	 stage('Blue Deploy') {
+	 stage('Deploy') {
             steps {
                 
                     container('kubectl') {
@@ -115,10 +115,9 @@ spec:
                 
                     container('python') {
                        
-                  
-                    sh 'behave -f allure_behave.formatter:AllureFormatter -o allure-results behaveTest/features/feature/*.feature'
-                    sh 'allure generate allure-results -o allure-report'
-                    sh 'tar -zcvf allure-report.tar.gz -C allure-report .'
+                   
+                    sh 'chmod 777 run-sh.sh'
+                    sh 'sh run-sh.sh'
 				    
 				  
                        
