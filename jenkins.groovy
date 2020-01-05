@@ -59,12 +59,12 @@ spec:
                 sh 'cd ${GOPATH}/src'
                 sh 'mkdir -p ${GOPATH}/src/celler'
 
-                // Copy all files in our Jenkins workspace to our project directory.                
+                           
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/celler'
 
                 sh 'cd ${GOPATH}/src/celler'
               
-               // sh 'go get -u github.com/swaggo/swag/cmd/swag'
+               
               
                
                 sh 'go build'
