@@ -59,12 +59,12 @@ spec:
                 sh 'cd ${GOPATH}/src'
                 sh 'mkdir -p ${GOPATH}/src/celler'
 
-                           
+                // Copy all files in our Jenkins workspace to our project directory.                
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/celler'
 
                 sh 'cd ${GOPATH}/src/celler'
               
-               
+               // sh 'go get -u github.com/swaggo/swag/cmd/swag'
               
                
                 sh 'go build'
@@ -100,11 +100,12 @@ spec:
                 
                     container('kubectl') {
                        
-                     
                         sh "sed 's/<imageid>/$BUILD_NUMBER/g' deployment.yaml > deploy.yaml"
                         sh "cat deploy.yaml"
                         sh "kubectl apply -f deploy.yaml"
-                        sh "kubectl get pods"
+                        sh 'chmod 777 depl-sh.sh'
+                        sh 'sh depl-sh.sh'
+                       
 						
                        
                     }
@@ -115,7 +116,8 @@ spec:
                 
                     container('python') {
                        
-                   
+                   // sh 'allure --version'
+                   // sh 'java --version'
                     sh 'chmod 777 run-sh.sh'
                     sh 'sh run-sh.sh'
 				    
