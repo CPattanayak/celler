@@ -5,3 +5,6 @@ urllib3
 jsonschema
 Naked
 pika
+selenium
+xvfbwrapper
+behave-webdriver
