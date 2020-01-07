@@ -1,3 +1,5 @@
+import time
+
 from behave import given, then, when
 import behave_webdriver
 
@@ -13,7 +15,6 @@ def sample_when(context):
 @then('giving response')
 def sample_then(context):
     print('calling sample_then')
-
 @when(u'I open google.com')
 def step_impl(context):
    """
@@ -33,3 +34,29 @@ def step_then(context,title):
     context.driver.close()
     context.driver.quit()
     # context.vdisplay.stop()
+# @when(u'I open google.com')
+# def step_impl(context):
+#    """
+#
+#    :type context: object
+#    """
+#    # context.vdisplay = Xvfb()
+#    # context.vdisplay.start()
+#    print("> Starting the browser")
+#    context.driver = behave_webdriver.Chrome()
+#    context.driver.get("http://localhost:30002/")
+#
+# @then(u'the title should contain "{title}"')
+# def step_then(context,title):
+#     #assert context.browser.title == title
+#     context.driver.find_element_by_xpath('//*[@id="page-content-wrapper"]/div[2]/div/div/div[2]/div[1]/input').send_keys('chandan')
+#     context.driver.find_element_by_xpath('//*[@id="page-content-wrapper"]/div[2]/div/div/div[2]/div[2]/input').send_keys(9880360583)
+#     context.driver.find_element_by_xpath('//*[@id="page-content-wrapper"]/div[2]/div/div/div[2]/div[3]/input').send_keys(2)
+#     context.driver.find_element_by_xpath('//*[@id="submitfrm"]').click()
+#     time.sleep(5)
+#     alert = context.driver.switch_to.alert
+#     #if alert.is_displayed():
+#     alert.accept()
+#     context.driver.close()
+#     context.driver.quit()
+#     # context.vdisplay.stop()
