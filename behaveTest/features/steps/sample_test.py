@@ -24,12 +24,12 @@ def step_impl(context):
    # context.vdisplay.start()
    print("> Starting the browser")
    context.driver = behave_webdriver.Chrome.headless()
-   context.driver.get("http://www.google.com")
+   context.driver.get("http://celler:8082/swagger/index.html")
 
 @then(u'the title should contain "{title}"')
 def step_then(context,title):
     browser_title = context.driver.title
-    assert 'Google' in browser_title, 'Found "%s" instead ' % browser_title
+    assert 'Swagger UI' in browser_title, 'Found "%s" instead ' % browser_title
     context.driver.close()
     context.driver.quit()
     # context.vdisplay.stop()
