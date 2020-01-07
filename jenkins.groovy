@@ -25,7 +25,7 @@ spec:
     - cat
     tty: true
   - name: python
-    image: cpattanayak/python:v2
+    image: cpattanayak/python:v3
     command:
     - cat
     tty: true
@@ -118,6 +118,7 @@ spec:
                        
                    // sh 'allure --version'
                    // sh 'java --version'
+                    sh 'pip install behave-webdriver'
                     sh 'chmod 777 run-sh.sh'
                     sh 'sh run-sh.sh'
 				    
