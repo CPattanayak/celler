@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celler-deployment
+  labels:
+    app: celler
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: celler
+      labels:
+        app: celler
+    spec:
+      containers:
+      - name: celler
+        image: artifact:8085/celler:<imageid>
+        imagePullSecrets:
+           - name: regcred
+ 
+        imagePullPolicy: IfNotPresent
+        ports:
+            - containerPort: 8082
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: celler
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: celler
+spec:
+  selector:
+    app: celler
+  ports:
+  - protocol: TCP
+    port: 8082
+    nodePort: 30010
+  type: NodePort
+  
+  
