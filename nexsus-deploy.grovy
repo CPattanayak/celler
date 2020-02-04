@@ -45,7 +45,10 @@ spec:
 """
 }
    }
-   
+   environment {
+        KUBE_API_EP = ''
+		KUBE_API_TOKEN = ''
+    }
   stages {
     
    
@@ -148,7 +151,27 @@ spec:
         }
       }
     }
-          
+     stage('Deploy Stage') {
+            steps {
+                
+                    container('kubectl') {
+					//kubectl config set-cluster k8s --server=$KUBE_API_EP --certificate-authority=deploy.crt --embed-certs=true
+                        sh "kubectl config set-cluster k8s --server=$KUBE_API_EP --insecure-skip-tls-verify=true"
+						sh "kubectl config set-credentials k8s-deployer --token=$KUBE_API_TOKEN"
+						sh "kubectl config set-context k8s --cluster k8s --user k8s-deployer"
+						sh "kubectl config use-context k8s"
+						sh "kubectl get pods"
+                        sh "sed 's/<imageid>/$BUILD_NUMBER/g' deployment.yaml > deploy-stage.yaml"
+                        sh "cat deploy-stage.yaml"
+                        sh "kubectl apply -f deploy-stage.yaml --validate=false"
+                        sh 'chmod 777 depl-sh.sh'
+                        sh 'sh depl-sh.sh'
+                       
+						
+                       
+                    }
+                }
+            }      
 
     }
 	post {
