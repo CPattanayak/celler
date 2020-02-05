@@ -1,4 +1,3 @@
-
 pipeline {
   agent {
     kubernetes {
@@ -45,10 +44,7 @@ spec:
 """
 }
    }
-   environment {
-        KUBE_API_EP = ''
-		KUBE_API_TOKEN = ''
-    }
+   
   stages {
     
    
@@ -104,11 +100,12 @@ spec:
                 
                     container('kubectl') {
                         
-                        sh "cd celler-local"
-                        sh "sed 's/<imageid>/$BUILD_NUMBER/g' Chart.yaml > Chart-tmp.yaml"
-                        sh "mv Chart-tmp.yaml Chart.yaml"
-                        sh 'cd ..'
-                        sh 'helm install --dry-run --debug ./celler-local'
+                       
+                        sh "sed 's/<imageid>/$BUILD_NUMBER/g' ./celler-local/Chart.yaml > Chart-tmp.yaml"
+                       
+                        sh "mv Chart-tmp.yaml ./celler-local/Chart.yaml"
+                        sh 'chmod 777 helm-build.sh'
+                        sh 'sh helm-build.sh'
                        
 						
                        
@@ -120,13 +117,29 @@ spec:
                 
                     container('python') {
                        
-                   // sh 'allure --version'
-                   // sh 'java --version'
+                   
                     sh 'pip install behave-webdriver'
                     sh 'chmod 777 run-sh.sh'
                     sh 'sh run-sh.sh'
 				    
 				  
+                       
+                    }
+                }
+            }
+			stage('Publish helm repo') {
+            steps {
+                
+                    container('kubectl') {
+                        
+                       
+                        sh "helm repo add chartmuseum http://artifact:8080"
+                       
+                        sh "helm package ./celler-local"
+                       
+                        sh 'curl --data-binary "@celler-local-$BUILD_NUMBER.tgz" http://artifact:8080/api/charts'
+                       
+						
                        
                     }
                 }
@@ -144,8 +157,3 @@ spec:
      
       
 }
-// helm plugin install https://github.com/chartmuseum/helm-push/
-//helm repo add chartmuseum http://localhost:8080
-//helm package .
-//curl --data-binary "@mychart-0.1.0.tgz" http://localhost:8080/api/charts
-//kubectl create secret docker-registry regcred --docker-server='http://artifact:8085/v1' --docker-username=admin --docker-password=<pass> --docker-email=chandan.manh@gmail.com
