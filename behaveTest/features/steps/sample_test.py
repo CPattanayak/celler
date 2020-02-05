@@ -25,7 +25,9 @@ def step_impl(context):
    # context.vdisplay.start()
    print("> Starting the browser")
    context.driver = behave_webdriver.Chrome.headless()
-   context.driver.get("http://celler:8082/swagger/index.html")
+   
+   #context.driver.get("http://celler:8082/swagger/index.html")
+   context.driver.get("http://celler-celler-local:8082/swagger/index.html")
 
 @then(u'the title should contain "{title}"')
 def step_then(context,title):
