@@ -15,7 +15,7 @@ spec:
   serviceAccountName: cicd
   containers:
   - name: kubectl
-    image: lachlanevenson/k8s-kubectl:v1.8.0
+    image: dtzar/helm-kubectl:latest
     command:
     - cat
     tty: true
@@ -103,12 +103,12 @@ spec:
             steps {
                 
                     container('kubectl') {
-                       
-                        sh "sed 's/<imageid>/$BUILD_NUMBER/g' deployment-dev.yaml > deploy.yaml"
-                        sh "cat deploy.yaml"
-                        sh "kubectl apply -f deploy.yaml"
-                        sh 'chmod 777 depl-sh.sh'
-                        sh 'sh depl-sh.sh'
+                        
+                        sh "cd celler-local"
+                        sh "sed 's/<imageid>/$BUILD_NUMBER/g' Chart.yaml > Chart-tmp.yaml"
+                        sh "mv Chart-tmp.yaml Chart.yaml"
+                        sh 'cd ..'
+                        sh 'helm install --dry-run --debug ./celler-local'
                        
 						
                        
@@ -131,47 +131,8 @@ spec:
                     }
                 }
             }
-	stage('Build Prod Docker') {
-      steps {
-        container('docker') {
-         
-          script {
-      
-               
-              def image = docker.build("cpattanayak/celler:$BUILD_NUMBER")
-                        docker.withRegistry( '', "dockerhubid") {
-                            image.push()
-							}
-               
-              
-              
-               
-              }
+	
           
-        }
-      }
-    }
-     stage('Deploy Stage') {
-            steps {
-                
-                    container('kubectl') {
-					//kubectl config set-cluster k8s --server=$KUBE_API_EP --certificate-authority=deploy.crt --embed-certs=true
-                        sh "kubectl config set-cluster k8s --server=$KUBE_API_EP --insecure-skip-tls-verify=true"
-						sh "kubectl config set-credentials k8s-deployer --token=$KUBE_API_TOKEN"
-						sh "kubectl config set-context k8s --cluster k8s --user k8s-deployer"
-						sh "kubectl config use-context k8s"
-						sh "kubectl get pods"
-                        sh "sed 's/<imageid>/$BUILD_NUMBER/g' deployment.yaml > deploy-stage.yaml"
-                        sh "cat deploy-stage.yaml"
-                        sh "kubectl apply -f deploy-stage.yaml --validate=false"
-                        sh 'chmod 777 depl-sh.sh'
-                        sh 'sh depl-sh.sh'
-                       
-						
-                       
-                    }
-                }
-            }      
 
     }
 	post {
