@@ -8,7 +8,7 @@ image:
   repository: artifact:8085/celler
   pullPolicy: IfNotPresent
 
-imagePullSecrets: [regcred]
+imagePullSecrets: [ name: regcred]
 nameOverride: ""
 fullnameOverride: ""
 
