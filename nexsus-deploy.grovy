@@ -187,4 +187,5 @@ spec:
 //helm repo add chartmuseum http://localhost:8080
 //helm package .
 //curl --data-binary "@mychart-0.1.0.tgz" http://localhost:8080/api/charts
-//kubectl create secret docker-registry regcred --docker-server='http://artifact:8085/v1' --docker-username=admin --docker-password=<pass> --docker-email=chandan.manh@gmail.com
+//kubectl create secret docker-registry regcred1 --docker-server='https://host.docker.internal:8082' --docker-username=admin --docker-password=Ayushi_123 --docker-email=chandan.manh@gmail.com
+//kubectl create secret generic regcred4 --from-file=.dockerconfigjson=config.json --type=kubernetes.io/dockerconfigjson

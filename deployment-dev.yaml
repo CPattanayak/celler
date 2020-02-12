@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
       - name: celler
-        image: artifact:8085/celler:<imageid>
-        imagePullSecrets:
-           - name: regcred
- 
+        image: host.docker.internal:8082/docker-local/celler:latest
+        
         imagePullPolicy: IfNotPresent
         ports:
             - containerPort: 8082
       restartPolicy: Always
+      imagePullSecrets:
+           - name: regcred4
   selector:
     matchLabels:
       app: celler
