@@ -44,6 +44,16 @@ spec:
 """
 }
    }
+   environment {
+        KUBE_API_EP = ''
+		KUBE_API_TOKEN = ''
+		IMAGE_NAME='host.docker.internal:8082/docker-local/celler'
+		LOCAL_REPO='https://host.docker.internal:8082'
+		
+		
+		
+    }
+   
    
   stages {
     
@@ -81,8 +91,8 @@ spec:
           script {
       
                
-              def image = docker.build("artifact:8085/celler:$BUILD_NUMBER")
-                        docker.withRegistry( 'http://artifact:8085/v1', "nexsus") {
+              def image = docker.build("$IMAGE_NAME:$BUILD_NUMBER")
+                        docker.withRegistry( $LOCAL_REPO, "nexsus") {
                             image.push()
 							}
                
