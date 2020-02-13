@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: artifact:8085/celler
+  repository: cpattanayak/celler
   pullPolicy: IfNotPresent
 
-imagePullSecrets: [ name: regcred]
+imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""
 
