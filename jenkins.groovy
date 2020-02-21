@@ -45,6 +45,9 @@ spec:
 """
 }
    }
+   triggers {
+     githubPush()
+  }
    
   stages {
     
