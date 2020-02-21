@@ -12,7 +12,7 @@ labels:
   component: ci
 spec:
   # Use service account that can deploy to all namespaces
-  serviceAccountName: cicd
+  #serviceAccountName: cicd
   containers:
   - name: kubectl
     image: lachlanevenson/k8s-kubectl:v1.8.0
