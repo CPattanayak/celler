@@ -1,5 +1,7 @@
 # Celler example
 
+#Web
+
 Gen doc
 
 ```console
